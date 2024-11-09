@@ -6,7 +6,7 @@ public class AsteroidFactory : MonoBehaviour
 {
     public GameObject enemyPrefab;      // Reference to the enemy prefab
     public GameObject asteroidPrefab; // Reference to the asteroid prefab
-    public float initialSpawnRate = 10f;      // Time interval between spawns
+    public float initialSpawnRate = 5f;      // Time interval between spawns
     public float spawnDistance = 10f; // Distance from screen bounds to spawn asteroids
     public float asteroidSpeed = 5f;  // Speed of the asteroid
     public float enemySpeed = 3f;
@@ -38,9 +38,9 @@ public class AsteroidFactory : MonoBehaviour
         {
             IncreaseDifficulty();
             // Randomly decide to spawn an asteroid or enemy
-            int spawnType = Random.Range(0, 2); // 0 = asteroid, 1 = enemy
+            int spawnType = Random.Range(0, 6); // 0 = asteroid, 1 = enemy
 
-            if (spawnType == 0)
+            if (spawnType <4)
             {
                 SpawnAsteroid();
             }

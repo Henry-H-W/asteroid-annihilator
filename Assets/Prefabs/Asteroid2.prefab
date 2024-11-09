@@ -182,3 +182,8 @@ MonoBehaviour:
   rotationSpeed: 30
   asteroidPrefab: {fileID: 4034775131586801773}
   spawnDistance: 10
+  pu1: {fileID: 1579009528440625007, guid: dd42ea0284445254b9c2b40e3fb8c560, type: 3}
+  pu2: {fileID: 8762668758766319359, guid: 5b35cf8da36cdaf4e92ed0d3abaf6728, type: 3}
+  pu3: {fileID: 4509317317131304403, guid: e1068ec9a5148a448addc03076d4f095, type: 3}
+  pu4: {fileID: 150233018959807779, guid: f09260b924637b544aefbfe92a9694c9, type: 3}
+  playergo: {fileID: 0}

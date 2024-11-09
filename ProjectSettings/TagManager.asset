@@ -9,12 +9,14 @@ TagManager:
   - Ammo Up
   - Asteroid
   - Enemy
-
+  - Reload Up
+  - Health Up
+  - PlayerBullet
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Border
+  - 
   - Water
   - UI
   - 

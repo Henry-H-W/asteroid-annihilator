@@ -34,7 +34,8 @@ public abstract class Enemy : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Player"))
         {
-
+            Player player = collision.gameObject.GetComponent<Player>();
+            player.Hurt();
             //Debug.Log("touch player");
             //player take damage;
             Destroy(gameObject);
@@ -56,11 +57,11 @@ public abstract class Enemy : MonoBehaviour
                 TakeDamage();
             }
         }
-        /**else if (collision.gameObject.CompareTag("PlayerBullet"))
+        else if (collision.gameObject.CompareTag("PlayerBullet"))
         {
             //player bullets will do damage and split the roid if it dies
-
-        }**/
+            TakeDamage();
+        }
     }
 
     //enemy bullets will not do anything (put into bullet logic)

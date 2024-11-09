@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
 {
     [Header("Movement")]
     public float speed;
-    public float rotationSpeed;
+    private float rotationSpeed = 180;
     public float maxSpeed;
 
     [Header("Shooting")]
@@ -56,6 +56,7 @@ public class Player : MonoBehaviour
         rb.freezeRotation = true;
         varMaxAmmo = maxAmmo;
         varReloadTime = reloadTime;
+
     }
 
     // Update is called once per frame
@@ -144,7 +145,6 @@ public class Player : MonoBehaviour
 
     private void Shoot()
     {
-        Hurt();
 
         readyToShoot = false;
 

@@ -129,14 +129,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 300
-  rotationSpeed: 100
+  rotationSpeed: 150
   maxSpeed: 100
-  shootCooldown: 1
+  shootCooldown: 0.3
+  bulletSpeed: 37
   shootKey: 32
+  reloadTime: 0.5
+  maxAmmo: 10
   bullet1: {fileID: 3683669615197768019, guid: 9a5e5e1f2568b514aaca6ed0bbf641ad, type: 3}
-  bullet2: {fileID: 0}
-  bullet3: {fileID: 0}
-  bullet4: {fileID: 0}
+  bullet2: {fileID: 3683669615197768019, guid: e4fe6f476006ce846b521ebe1175ad25, type: 3}
+  bullet3: {fileID: 3683669615197768019, guid: c897c5d13d840364091280aaebfa109e, type: 3}
+  bullet4: {fileID: 3683669615197768019, guid: 80d5468747582384e916b6949cb9d766, type: 3}
+  invulnTime: 2
+  health: 3
 --- !u!60 &4526154669542696182
 PolygonCollider2D:
   m_ObjectHideFlags: 0

@@ -23,5 +23,14 @@ public class Bullet : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Asteroid") || collision.gameObject.CompareTag("Enemy"))
+        {
+            //player bullets will do damage and split the roid if it dies
+            Destroy(gameObject);
+        }
     }
 }

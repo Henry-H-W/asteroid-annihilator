@@ -25,6 +25,10 @@ public class Asteroid : MonoBehaviour
 
     private bool deleteAtTarget = true;
 
+    public GameObject pu1;
+    public GameObject pu2;
+    public GameObject pu3;
+    public GameObject pu4;
 
     void Start()
     {
@@ -33,6 +37,7 @@ public class Asteroid : MonoBehaviour
         screenWidth = screenHeight * Camera.main.aspect;
         // Adjust the scale based on the size
         transform.localScale = Vector3.one * size;
+        
     }
 
     // Update is called once per frame
@@ -113,7 +118,7 @@ public class Asteroid : MonoBehaviour
 
     public void SetAttributes(float newHealth, float newSize, Vector2 newTargetPosition, float newSpeed, bool newDeleteAtTarget)
     {
-        health = newHealth;
+        health = 1;
         size = newSize;
         target = newTargetPosition;
         speed = newSpeed;
@@ -139,8 +144,9 @@ public class Asteroid : MonoBehaviour
        
         if (collision.gameObject.CompareTag("Player"))
         {
-
-            //Debug.Log("touch player");
+            Player player = collision.gameObject.GetComponent<Player>();
+            player.Hurt();
+            Debug.Log("touch player");
             //player take damage;
             Destroy(gameObject);
         }
@@ -178,19 +184,66 @@ public class Asteroid : MonoBehaviour
                 Split();
             }
         }
-        /**else if (collision.gameObject.CompareTag("PlayerBullet"))
+        else if (collision.gameObject.CompareTag("PlayerBullet"))
         {
             //player bullets will do damage and split the roid if it dies
 
+            TakeDamage();
+
         }
         //enemy bullets will not do anything (put into bullet logic)
-        **/
+        
     }
 
+    public void TakeDamage()
+    {
+        health -= 1;
+        Debug.Log(health);
+        if (health <= 0)
+        {
+            if (size > 0.5)
+            {
+                // If comparable in size or smaller, split
+                Split();
+            }
+            if (size > 1.5)
+            {
+                SpawnPowerUp();
+            }
+            GameObject playergo = GameObject.FindGameObjectWithTag("Player");
+            Player player = playergo.gameObject.GetComponent<Player>();
+            player.IncreaseScore((int)size*100);
 
+            Destroy(gameObject);
+        }
+    }
     void RotateAsteroid()
     {
         // Rotate asteroid by rotationSpeed degrees per second
         transform.Rotate(0, 0, rotationSpeed * Time.deltaTime);
+    }
+
+    void SpawnPowerUp()
+    {
+        int powerUpNum = Random.Range(0, 4);
+        GameObject randomPu = pu1;
+        switch (powerUpNum)
+        {
+            case 0: // Spawn on top, target somewhere below
+                randomPu = pu1;
+                break;
+            case 1: // Spawn on right, target somewhere to the left
+                randomPu = pu2;
+                break;
+            case 2: // Spawn on bottom, target somewhere above
+                randomPu = pu3;
+                break;
+            case 3: // Spawn on left, target somewhere to the right
+                randomPu = pu4;
+                break;
+        }
+
+        Instantiate(randomPu, transform.position, Quaternion.identity);
+
     }
 }
