@@ -23,6 +23,9 @@ public class Asteroid : MonoBehaviour
     private float screenHeight;
     public float spawnDistance = 10f;
 
+    private bool deleteAtTarget = true;
+
+
     void Start()
     {
         // Calculate screen bounds in world units
@@ -72,7 +75,7 @@ public class Asteroid : MonoBehaviour
                     Vector2 fragmentTarget = (Vector2)transform.position + offsetDirection * 5f;
 
                     // Set attributes for the new asteroid
-                    asteroidComponent.SetAttributes(newHealth, newSize, fragmentTarget, fragmentSpeed);
+                    asteroidComponent.SetAttributes(newHealth, newSize, fragmentTarget, fragmentSpeed, false);
                 }
             }
         }
@@ -108,13 +111,14 @@ public class Asteroid : MonoBehaviour
     }
 
 
-    public void SetAttributes(float newHealth, float newSize, Vector2 newTargetPosition, float newSpeed)
+    public void SetAttributes(float newHealth, float newSize, Vector2 newTargetPosition, float newSpeed, bool newDeleteAtTarget)
     {
         health = newHealth;
         size = newSize;
         target = newTargetPosition;
         speed = newSpeed;
         transform.localScale = Vector3.one * size;
+        deleteAtTarget = newDeleteAtTarget;
     }
 
     void MoveTowardsTarget()
@@ -123,7 +127,10 @@ public class Asteroid : MonoBehaviour
         Vector2 direction = (target - (Vector2)transform.position).normalized;
         transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
 
-        
+       if((Vector2)transform.position == target && deleteAtTarget)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -133,7 +140,7 @@ public class Asteroid : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
 
-            Debug.Log("touch player");
+            //Debug.Log("touch player");
             //player take damage;
             Destroy(gameObject);
         }
@@ -146,9 +153,9 @@ public class Asteroid : MonoBehaviour
             if (0.5 * size > otherAsteroid.size)
             {
                 // If this asteroid is much larger, it will absorb the smaller asteroid
-                SetAttributes(health, size+otherAsteroid.size/2, target, speed);
+                SetAttributes(health, size+otherAsteroid.size/2, target, speed, true);
             }
-            else if (size >1)
+            else if (size >0.5)
             {
                 // If comparable in size or smaller, split
                 Split();
@@ -161,16 +168,23 @@ public class Asteroid : MonoBehaviour
 
 
         }
-        else if (collision.gameObject.CompareTag("Enemies"))
+        else if (collision.gameObject.CompareTag("Enemy"))
         {
             //enemies should take damage from small asteroids and be destroyed by large ones
+            //if bigger than 4 nothing happens (to asteroid)
+            if (size < 4)
+            {
+                // If this asteroid is decent size, split and kill enemy
+                Split();
+            }
         }
-        else if (collision.gameObject.CompareTag("PlayerBullet"))
+        /**else if (collision.gameObject.CompareTag("PlayerBullet"))
         {
             //player bullets will do damage and split the roid if it dies
 
         }
         //enemy bullets will not do anything (put into bullet logic)
+        **/
     }
 
 

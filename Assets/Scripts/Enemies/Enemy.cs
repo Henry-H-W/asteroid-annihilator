@@ -1,51 +1,77 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
+using UnityEngine.SocialPlatforms;
+using UnityEngine.TextCore.Text;
+using System.Drawing;
 
-public class Enemy : Target
+public abstract class Enemy : MonoBehaviour
 {
+
+    public float moveSpeed = 1f;
+    public int maxHP = 3;
+    public float health;
+
+
     public GameObject target;
-    public float moveSpeed;
-    public SpriteRenderer spRend;
 
-    // Start is called before the first frame update
-    void Start()
+
+    public float DistanceFromTarget()
     {
-        
+        return Vector2.Distance(transform.position, target.transform.position);
     }
 
-    // Update is called once per frame
-    void Update()
+    
+    public void AcquireTarget()
     {
-        
+        target = GameObject.FindGameObjectWithTag("Player");
     }
-    public void RotateTowardsTarget()
+
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        Vector2 direction = target.transform.position - transform.position;
-        direction.Normalize();
 
-        //find angle of direction in degrees --- use to determine the direction the enemy sprites will face
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-        //Debug.Log(angle);
-
-        if ((angle > 90 && angle < 270) || (angle < -90 && angle > -270))//angle towards left
+        if (collision.gameObject.CompareTag("Player"))
         {
-            spRend.flipX = true;
 
+            //Debug.Log("touch player");
+            //player take damage;
+            Destroy(gameObject);
         }
-        else//angle towards right
+        else if (collision.gameObject.CompareTag("Asteroid"))
         {
-            spRend.flipX = false;
-
+            Asteroid otherAsteroid = collision.gameObject.GetComponent<Asteroid>();
+            //smaller asteroids should just die
+            //larger asteroids should survive
+            // Compare the size of this asteroid with the size of the other asteroid
+            if (otherAsteroid.size > 4)
+            {
+                // If this asteroid is much larger, kill
+                Destroy(gameObject);
+            }
+            else
+            {
+                // If comparable in size or smaller, damage
+                TakeDamage();
+            }
         }
+        /**else if (collision.gameObject.CompareTag("PlayerBullet"))
+        {
+            //player bullets will do damage and split the roid if it dies
 
-
+        }**/
     }
 
-    public void MoveTowardsTarget()
+    //enemy bullets will not do anything (put into bullet logic)
+    public void TakeDamage()
     {
-        //Sets movement of this enemy towards the player
-        transform.position = Vector3.MoveTowards(this.transform.position, target.transform.position, moveSpeed * Time.deltaTime);
+        health -= 1;
+        if (health <= 0)
+        {
+           Destroy(gameObject);
+        }
     }
+
 }
+
