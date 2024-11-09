@@ -4,13 +4,17 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Border
+  - Level Up
+  - Ammo Up
   - Asteroid
   - Enemy
+
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Border
   - Water
   - UI
   - 
