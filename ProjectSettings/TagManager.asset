@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Border
+  - Level Up
+  - Ammo Up
   layers:
   - Default
   - TransparentFX

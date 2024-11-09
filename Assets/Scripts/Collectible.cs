@@ -13,6 +13,8 @@ public class Collectible : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.rotation = Quaternion.Euler(Vector3.forward * 30 * Time.deltaTime);
+        float rotAmount = 90f * Time.deltaTime;
+        float curRot = transform.localRotation.eulerAngles.z;
+        transform.localRotation = Quaternion.Euler(new Vector3(0, 0, curRot + rotAmount));
     }
 }
