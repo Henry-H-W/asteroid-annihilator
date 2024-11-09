@@ -7,6 +7,9 @@ TagManager:
   - Border
   - Level Up
   - Ammo Up
+  - Asteroid
+  - Enemy
+
   layers:
   - Default
   - TransparentFX
